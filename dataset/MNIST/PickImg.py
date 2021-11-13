@@ -2,9 +2,9 @@ import os
 import shutil
 
 if __name__ == '__main__':
-    dataset_path = "D:\\Dataset\\NMIST\\test1_images\\"
-    target_path = "D:\\Dataset\\NMIST\\test_images\\"
-    g = os.walk(r"D:\\Dataset\\NMIST\\test1_images\\")
+    dataset_path = "D:\\Dataset\\MNIST\\test1_images\\"
+    target_path = "D:\\Dataset\\MNIST\\test_images\\"
+    g = os.walk(r"D:\\Dataset\\MNIST\\test1_images\\")
     for path, dir_list, file_list in g:
         count = 0
         for file_name in file_list:

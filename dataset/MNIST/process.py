@@ -5,10 +5,10 @@ import numpy as np
 TRAIN_IMAGES_DIR = "train_images/"
 TEST_IMAGES_DIR = "test_images/"
 
-TRAIN_IMAGE_DATASET_PATH = "D:/Dataset/NMIST/train-images.idx3-ubyte"
-TRAIN_LABEL_DATASET_PATH = "D:/Dataset/NMIST/train-labels.idx1-ubyte"
-TEST_IMAGE_DATASET_PATH = "D:/Dataset/NMIST/t10k-images.idx3-ubyte"
-TEST_LABEL_DATASET_PATH = "D:/Dataset/NMIST/t10k-labels.idx1-ubyte"
+TRAIN_IMAGE_DATASET_PATH = "D:/Dataset/MNIST/train-images.idx3-ubyte"
+TRAIN_LABEL_DATASET_PATH = "D:/Dataset/MNIST/train-labels.idx1-ubyte"
+TEST_IMAGE_DATASET_PATH = "D:/Dataset/MNIST/t10k-images.idx3-ubyte"
+TEST_LABEL_DATASET_PATH = "D:/Dataset/MNIST/t10k-labels.idx1-ubyte"
 
 
 def convert_to_image(dataset_type):
