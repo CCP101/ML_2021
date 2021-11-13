@@ -6,22 +6,24 @@ import numpy as np
 
 
 if __name__ == '__main__':
-    tfrecord_f = './train.tfrecord'
+    tfrecord_f = './TFrecord/test.tfrecord'
     # charset = []
     # if os.path.exists('characters.txt'):
     #     with open('characters.txt', 'r', encoding="utf-8") as f:
     #         charset = f.readlines()
     #         charset = [i.strip() for i in charset]
-    g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\train\\")
+    g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\test\\")
     with tf.io.TFRecordWriter(tfrecord_f) as tfrecord_writer:
         for path, dir_list, file_list in g:
             count = 0
             for dir in dir_list:
-                g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\train\\" + dir)
+                g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\test\\" + dir)
                 for d_path, d_dir_list, d_file_list in g:
                     for file in d_file_list:
                         img_path = d_path + "\\" + file
-                        img = np.array(cv2.imread(img_path))
+                        img = cv2.imread(img_path)
+                        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                        img = np.array(img)
                         label = count
                         example = tf.train.Example(features=tf.train.Features(
                             feature={

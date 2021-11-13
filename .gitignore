@@ -2,3 +2,4 @@
 /dataset/train.tfrecord
 /dataset/test.tfrecord
 /checkpoints/
+/dataset/TFrecord/
