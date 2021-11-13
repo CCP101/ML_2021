@@ -1,6 +1,6 @@
 import os
 import shutil
-import cv2
+from cv2 import cv2
 import imgaug as ia
 import time
 from imgaug import augmenters as iaa
