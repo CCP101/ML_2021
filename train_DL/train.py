@@ -44,7 +44,7 @@ def load_characters():
 
 
 def preprocess(x):
-    x['image'] = (x['image']) / 255.
+    x['image'] = (x['image'] - 128.) / 128.
     return x['image'], x['label']
 
 
@@ -62,38 +62,32 @@ if __name__ == '__main__':
     print('all characters: {}'.format(num_classes))
     train_dataset = load_ds()
     train_dataset = train_dataset.map(preprocess)
-    train_dataset = train_dataset.shuffle(640)
-    train_dataset = train_dataset.batch(64)
+    train_dataset = train_dataset.shuffle(64)
+    train_dataset = train_dataset.batch(200)
     train_dataset = train_dataset.repeat()
     val_ds = load_val_ds()
     val_ds = val_ds.map(preprocess)
-    val_ds = val_ds.shuffle(640)
-    val_ds = val_ds.batch(64)
+    val_ds = val_ds.shuffle(64)
+    val_ds = val_ds.batch(200)
     val_ds = val_ds.repeat()
 
     model = keras.models.Sequential([
-        keras.layers.Conv2D(32, (3, 3), padding="valid", strides=(1, 1), data_format="channels_last", input_shape=(64, 64, 1), activation="relu"),
-        keras.layers.MaxPool2D(pool_size=(2, 2)),
-        keras.layers.Dropout(0.2),
-        keras.layers.Conv2D(64, (3, 3), padding="valid", strides=(1, 1), data_format="channels_last", activation="relu"),
-        keras.layers.MaxPool2D(pool_size=(2, 2)),
-        keras.layers.Dropout(0.2),
+        keras.layers.Conv2D(96, (11, 11), strides=(3, 3), input_shape=(64, 64, 1), activation="relu"),
+        keras.layers.MaxPool2D(pool_size=(3, 3), strides=(2, 2)),
+        keras.layers.Conv2D(256, (5, 5), padding="same", strides=(1, 1), activation="relu"),
+        keras.layers.MaxPool2D(pool_size=(3, 3), strides=(2, 2)),
+        keras.layers.Conv2D(384, (3, 3), padding="same", strides=(1, 1), activation="relu"),
+        keras.layers.Conv2D(384, (3, 3), padding="same", strides=(1, 1), activation="relu"),
+        keras.layers.Conv2D(256, (3, 3), padding="same", strides=(1, 1), activation="relu"),
         keras.layers.Flatten(),
-        keras.layers.Dense(1024, activation='relu'),
-        keras.layers.Dropout(0.2),
-        keras.layers.Dense(3765, activation='softmax')
+        keras.layers.Dense(4096, activation='relu'),
+        keras.layers.Dropout(0.25),
+        keras.layers.Dense(4096, activation='relu'),
+        keras.layers.Dropout(0.25),
+        keras.layers.Dense(1000, activation='softmax')
     ])
     start_epoch = 0
     ckpt_path = "D:\\WorkSpace\\PycharmProjects\\ML_2021\\checkpoints\\"
-    latest_ckpt = tf.train.latest_checkpoint(os.path.dirname(ckpt_path))
-    model.save_weights(ckpt_path.format(epoch=0))
-    model.save(os.path.join(os.path.dirname(ckpt_path), 'cn_ocr.h5'))
-    if latest_ckpt:
-        start_epoch = int(latest_ckpt.split('-')[1].split('.')[0])
-        model.load_weights(latest_ckpt)
-        print('model resumed from: {}, start at epoch: {}'.format(latest_ckpt, start_epoch))
-    else:
-        print('passing resume since weights not there. training from scratch')
     callbacks = [tf.keras.callbacks.ModelCheckpoint(ckpt_path, save_weights_only=True, verbose=1, period=100),
                  tf.keras.callbacks.TensorBoard(run_logdir)]
     learning_rate = 0.01
@@ -117,5 +111,6 @@ if __name__ == '__main__':
             steps_per_epoch=1024,
             callbacks=callbacks)
     except KeyboardInterrupt:
-        model.save_weights(ckpt_path.format(epoch=0))
+        model.save(os.path.join(os.path.dirname(ckpt_path), 'cn_ocr.h5'))
+        model.save_weights(ckpt_path.format(epoch=200))
         print('keras model saved.')
