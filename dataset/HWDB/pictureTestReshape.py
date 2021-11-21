@@ -18,8 +18,7 @@ if __name__ == '__main__':
     #         if not folder:
     #             os.makedirs(new_path)
 
-
-    #游走到目标目录，并对所有文件处理
+    # 游走到目标目录，并对所有文件处理
     for path, dir_list, file_list in g:
         count = 0
         for file_name in file_list:
@@ -28,7 +27,7 @@ if __name__ == '__main__':
             if height * width >= 400:
                 img = cv2.resize(img, (64, 64), interpolation=cv2.INTER_CUBIC)
                 new_path = path.replace("test1", "test")
-                #新存储路径
+                # 新存储路径
                 store_path = new_path + "\\" + str(count)+".png"
                 print(store_path)
                 cv2.imwrite(store_path, img)

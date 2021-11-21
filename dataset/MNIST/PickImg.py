@@ -8,7 +8,7 @@ if __name__ == '__main__':
     for path, dir_list, file_list in g:
         count = 0
         for file_name in file_list:
-            #简单的拷贝文件
+            # 简单的拷贝文件
             target_path = path.replace("test1", "test")
             shutil.copyfile(path+"\\"+file_name, target_path+"\\"+str(count)+".jpg")
             print(target_path+"\\"+str(count)+".jpg")
