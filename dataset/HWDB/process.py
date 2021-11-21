@@ -13,6 +13,7 @@ def read_from_gnt_dir(gnt_dir=train_data_dir):
         header_size = 10
         while True:
             header = np.fromfile(f, dtype='uint8', count=header_size)
+            #位操作 按比特及官方数据集说明处理各个位
             if not header.size: break
             sample_size = header[0] + (header[1] << 8) + (header[2] << 16) + (header[3] << 24)
             tagcode = header[5] + (header[4] << 8)
@@ -31,21 +32,22 @@ def read_from_gnt_dir(gnt_dir=train_data_dir):
                 for image, tagcode in one_file(f):
                     yield image, tagcode
 
+# 弃用 使用pickle序列化转储字符表，但是实际上会产生GBK等复杂的字符集问题
+# char_set = set()
+# for _, tagcode in read_from_gnt_dir(gnt_dir=train_data_dir):
+#     tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
+#     char_set.add(tagcode_unicode)
+# char_list = list(char_set)
+# char_dict = dict(zip(sorted(char_list), range(len(char_list))))
+# print(len(char_dict))
+# import pickle
+# f = open('char_dict', 'wb')
+# pickle.dump(char_dict, f)
+# f.close()
 
-char_set = set()
-for _, tagcode in read_from_gnt_dir(gnt_dir=train_data_dir):
-    tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
-    char_set.add(tagcode_unicode)
-char_list = list(char_set)
-char_dict = dict(zip(sorted(char_list), range(len(char_list))))
-print(len(char_dict))
-import pickle
-
-f = open('char_dict', 'wb')
-pickle.dump(char_dict, f)
-f.close()
 train_counter = 0
 test_counter = 0
+# 分别解析HWDB解压后的训练集及验证集
 for image, tagcode in read_from_gnt_dir(gnt_dir=train_data_dir):
     tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
     im = Image.fromarray(image)

@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow import keras
 import glob
 
-
+#验证 调用训练好的模型 未写完
 def load_characters():
     charset = []
     if os.path.exists('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\characters.txt'):

@@ -3,6 +3,7 @@ import numpy as np
 import os
 from tensorflow import keras
 
+#MNIST实验文档 也是炼丹第一个实验 有空自己跑着玩玩
 (X_train_full, y_train_full), (X_test, y_test) = keras.datasets.mnist.load_data()
 X_train_full = X_train_full / 255.
 X_train, X_valid = X_train_full[:-5000], X_train_full[-5000:]
@@ -26,13 +27,13 @@ model = keras.models.Sequential([
     keras.layers.Dense(10, activation="softmax")
 ])
 model.compile(loss="sparse_categorical_crossentropy",
-              optimizer="nadam",
-              metrics=["accuracy"])
+            optimizer="nadam",
+            metrics=["accuracy"])
 
 run_index = 2
 run_logdir = os.path.join(os.curdir, "../my_logs", "run_bn_{:03d}".format(run_index))
 tensorboard_cb = keras.callbacks.TensorBoard(run_logdir)
 callbacks = [tensorboard_cb]
 model.fit(X_train, y_train, epochs=20,
-          validation_data=(X_valid, y_valid),
-          callbacks=callbacks)
+        validation_data=(X_valid, y_valid),
+        callbacks=callbacks)

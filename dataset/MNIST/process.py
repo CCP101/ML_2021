@@ -23,7 +23,7 @@ def convert_to_image(dataset_type):
     else:
         print("Invalid type.")
         return
-
+    #参考HWDB位操作 思想一样
     counter = [0] * 10
 
     image_magic_number = int.from_bytes(image_dataset.read(4), byteorder='big', signed=False)
@@ -43,6 +43,7 @@ def convert_to_image(dataset_type):
         image = np.array(image, dtype=np.uint8).reshape((image_row, image_col))
         label = int.from_bytes(label_dataset.read(1), byteorder='big', signed=False)
         counter[label] += 1
+        #图片像素黑白反转操作
         image = np.ones((28, 28), dtype=np.int8) * 255 - image
         image_path = images_dir + str(label) + "/" + str(label) + "." + str(counter[label]) + ".jpg"
         cv2.imwrite(image_path, image)
