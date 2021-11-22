@@ -42,6 +42,7 @@ def predict(model, img_f):
     ori_img = cv2.imread(img_f)
     ori_img = cv2.resize(ori_img, (64, 64), interpolation=cv2.INTER_CUBIC)
     ori_img = cv2.cvtColor(ori_img, cv2.COLOR_BGR2GRAY)
+    # 升到四维空间[batch, height, width, channels]
     ori_img = ori_img / 255.
     ori_img = tf.expand_dims(ori_img, axis=-1)
     img = tf.expand_dims(ori_img, axis=0)
