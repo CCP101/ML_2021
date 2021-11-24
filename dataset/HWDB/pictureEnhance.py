@@ -7,7 +7,7 @@ import re
 from imgaug import augmenters as iaa
 
 if __name__ == '__main__':
-    g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\test_cut\\")
+    g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\train_original\\")
 
     # for path, dir_list, file_list in g:
     #     for i in dir_list:
@@ -26,7 +26,7 @@ if __name__ == '__main__':
             img = cv2.imread(path + "\\" + file_name)
             # resize为64*64像素，注意因为中文“一”的数据集已替换，所以不需要考虑图片大小是否有极端情况
             img = cv2.resize(img, (64, 64), interpolation=cv2.INTER_CUBIC)
-            label_path = path.replace("D:\\\\Dataset\\\\HWDB\\\\HWDB1.1F\\\\test_cut\\\\test", "")
+            label_path = path.replace("D:\\\\Dataset\\\\HWDB\\\\HWDB1.1F\\\\train_original\\\\train", "")
             label_path = int(label_path[0:5])
             # 通过path获取当前图片的标签
             if label_path == label:
@@ -36,14 +36,14 @@ if __name__ == '__main__':
                 if count_z <= 250:
                     # 原图拷贝
                     img1 = img
-                    new_path = "D:\\Dataset\\HWDB\\HWDB1.1F\\test\\"
+                    new_path = "D:\\Dataset\\HWDB\\HWDB1.1F\\train_full\\"
                     store_path = new_path + str(label_path) + "_" + str(count) + ".png"
                     print(store_path)
                     cv2.imwrite(store_path, img1)
                     count += 1
-                    # 使用0到3.0的高斯模糊图像
+                    # 使用0到2.0的高斯模糊图像
                     seq1 = iaa.Sequential([
-                        iaa.GaussianBlur(sigma=(0, 3.0))])  
+                        iaa.GaussianBlur(sigma=(0, 2.0))])
                     new_image1 = seq1.augment_image(img)
                     store_path = new_path + str(label_path) + "_" + str(count) + ".png"
                     print(store_path)

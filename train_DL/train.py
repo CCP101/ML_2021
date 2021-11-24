@@ -42,8 +42,8 @@ def load_val_ds():
 def load_characters():
     # 读取字符集
     charset = []
-    if os.path.exists('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\charactersCut.txt'):
-        with open('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\charactersCut.txt', 'r', encoding="utf-8") as f:
+    if os.path.exists('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\characters.txt'):
+        with open('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\characters.txt', 'r', encoding="utf-8") as f:
             charset = f.readlines()
             charset = [i.strip() for i in charset]
     return charset
@@ -72,11 +72,11 @@ if __name__ == '__main__':
     # 数据集设置
     train_dataset = load_ds()
     train_dataset = train_dataset.map(preprocess)
-    train_dataset = train_dataset.batch(1000)
+    train_dataset = train_dataset.batch(500)
     train_dataset = train_dataset.repeat()
     val_ds = load_val_ds()
     val_ds = val_ds.map(preprocess)
-    val_ds = val_ds.batch(1000)
+    val_ds = val_ds.batch(500)
     val_ds = val_ds.repeat()
     # 模型搭建 Conv2D卷积 MaxPool2D池化 Dense全连接
     model = keras.models.Sequential([
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     ckpt_path = "D:\\WorkSpace\\PycharmProjects\\ML_2021\\checkpoints\\"
     # 回调配置
     callbacks = [tf.keras.callbacks.ModelCheckpoint(ckpt_path, save_weights_only=True, verbose=1, period=100),
-                tf.keras.callbacks.TensorBoard(run_logdir)]
+                 tf.keras.callbacks.TensorBoard(run_logdir)]
     # SGD随机梯度下降配置
     learning_rate = 0.01
     decay = 1e-6
@@ -120,7 +120,7 @@ if __name__ == '__main__':
             validation_data=val_ds,
             validation_steps=100,
             epochs=15000,
-            steps_per_epoch=1024,
+            steps_per_epoch=256,
             callbacks=callbacks)
     except KeyboardInterrupt:
         # 当CTRL+C时，停止训练，保存模型

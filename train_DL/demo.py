@@ -34,7 +34,7 @@ def get_model():
         keras.layers.Dropout(0.25),
         keras.layers.Dense(1000, activation='softmax')
     ])
-    model.load_weights('D:/WorkSpace/PycharmProjects/ML_2021/checkpoints/cn_ocr.h5')
+    model.load_weights('D:/WorkSpace/PycharmProjects/ML_2021/checkpoints/2/cn_ocr.h5')
     return model
 
 

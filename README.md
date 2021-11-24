@@ -142,11 +142,11 @@ CASIA-HWDB数据集为中科院自动化研究所创建，主要收集了成年�
 | conv2d (Conv2D)   |  (None, 20, 20, 96)   | 4800 |
 | max_pooling2d (MaxPooling2D)     |  (None, 9, 9, 96)   | 0 |
 |conv2d_1 (Conv2D)|(None, 9, 9, 256)|614656|
-|max_pooling2d_1 (MaxPooling2|(None, 4, 4, 256)|0|
+|max_pooling2d_1 (MaxPooling2D)|(None, 4, 4, 256)|0|
 |conv2d_2 (Conv2D)  |(None, 4, 4, 384)|885120   |
 |conv2d_3 (Conv2D)|(None, 4, 4, 384)|  1327488 |
 |conv2d_4 (Conv2D)| (None, 4, 4, 256) |884992  |
-|max_pooling2d_2 (MaxPooling2| (None, 2, 2, 256)|0|
+|max_pooling2d_2 (MaxPooling2D)| (None, 2, 2, 256)|0|
 |flatten (Flatten) |(None, 1024)|0|
 |dense (Dense) |(None, 4096)|4198400|
 |dropout (Dropout) |(None, 4096)|0|

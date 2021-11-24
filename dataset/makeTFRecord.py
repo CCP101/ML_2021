@@ -5,14 +5,14 @@ from cv2 import cv2
 import numpy as np
 
 if __name__ == '__main__':
-    tfrecord_f = './TFrecord/test.tfrecord'
+    tfrecord_f = './TFrecord/train.tfrecord'
     # 数据集里为了简便及计算方便，不存储对应中文，使用序号表示
     # charset = []
     # if os.path.exists('characters.txt'):
     #     with open('characters.txt', 'r', encoding="utf-8") as f:
     #         charset = f.readlines()
     #         charset = [i.strip() for i in charset]
-    g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\test_shuffle\\")
+    g = os.walk(r"D:\\Dataset\\HWDB\\HWDB1.1F\\train_final_shuffle\\")
     with tf.io.TFRecordWriter(tfrecord_f) as tfrecord_writer:
         for path, dir_list, file_list in g:
             for file_name in file_list:
