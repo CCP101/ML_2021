@@ -34,22 +34,24 @@ if __name__ == '__main__':
                 # 部分类有多达400张图片，而普遍的文件夹只有250张左右图片，做了图片增强后会继续扩大差距
                 # 所以只处理每个文件夹前250张图片
                 if count_z <= 250:
-                    # 原图拷贝
+                    # 1操作 原图拷贝
                     img1 = img
                     new_path = "D:\\Dataset\\HWDB\\HWDB1.1F\\train_full\\"
+                    # 拼接新的存储地址及文件名
                     store_path = new_path + str(label_path) + "_" + str(count) + ".png"
                     print(store_path)
                     cv2.imwrite(store_path, img1)
                     count += 1
-                    # 使用0到2.0的高斯模糊图像
+                    # 2操作 使用0到2.0的高斯模糊图像
                     seq1 = iaa.Sequential([
                         iaa.GaussianBlur(sigma=(0, 2.0))])
+                    # 获得增强后的新图片，下同
                     new_image1 = seq1.augment_image(img)
                     store_path = new_path + str(label_path) + "_" + str(count) + ".png"
                     print(store_path)
                     cv2.imwrite(store_path, new_image1)
                     count += 1
-                    # 高斯噪声
+                    # 3操作 高斯噪声
                     seq2 = iaa.Sequential([
                         iaa.AdditiveGaussianNoise(
                             loc=0, scale=(0.0, 0.05 * 1000), per_channel=0.5)
@@ -60,7 +62,7 @@ if __name__ == '__main__':
                     print(store_path)
                     cv2.imwrite(store_path, new_image2)
                     count += 1
-                    # 锐化操作
+                    # 4操作 锐化操作
                     seq3 = iaa.Sequential([
                         iaa.Sharpen(alpha=(0, 1.0), lightness=(0.75, 1.5))
                     ])
@@ -73,5 +75,6 @@ if __name__ == '__main__':
                 else:
                     continue
             else:
+                # 当识别到不是同一类的新图片，清零计数器
                 label = label_path
                 count_z = 0

@@ -1,10 +1,11 @@
 import os
-import cv2
+from cv2 import cv2
 
 if __name__ == '__main__':
     img_path = "D:\\Dataset\\MNIST\\test_images\\"
     g = os.walk(r"D:\\Dataset\\MNIST\\test_images\\")
     for path, dir_list, file_list in g:
+        # 对所有文件执行resize操作
         for file_name in file_list:
             img = cv2.imread(path + "\\" + file_name)
             print(img.shape)

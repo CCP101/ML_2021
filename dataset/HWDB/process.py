@@ -9,21 +9,30 @@ test_data_dir = os.path.join(data_dir, 'HWDB1.1tst_gnt')
 
 
 def read_from_gnt_dir(gnt_dir=train_data_dir):
+    """
+    从GNT二进制文件读取图片、标签等信息
+    :param gnt_dir: GNT文件所在文件夹地址
+    """
     def one_file(f):
         header_size = 10
         while True:
             header = np.fromfile(f, dtype='uint8', count=header_size)
             # 位操作 按比特及官方数据集说明处理各个位
             if not header.size:
+                # 若发生错误 跳出
                 break
+            # 26行做的是位运算，实际操作已注明在下行
             # sample_size = header[0] + (header[1] * 2^8) + (header[2] * 2^16) + (header[3] * 2^24)
             sample_size = header[0] + (header[1] << 8) + (header[2] << 16) + (header[3] << 24)
             tagcode = header[5] + (header[4] << 8)
+            # 获得图片的标签（中文字符）
             print(tagcode)
             width = header[6] + (header[7] << 8)
             height = header[8] + (header[9] << 8)
             if header_size + width * height != sample_size:
+                # 校验是否存在错误
                 break
+            # 通过numpy库将(1*(width*height))转换成(width*height)
             image = np.fromfile(f, dtype='uint8', count=width * height).reshape((height, width))
             yield image, tagcode
 
@@ -37,6 +46,7 @@ def read_from_gnt_dir(gnt_dir=train_data_dir):
 
 char_set = set()
 for _, tagcode in read_from_gnt_dir(gnt_dir=train_data_dir):
+    # 解码中文字符
     tagcode_unicode = struct.pack('>H', tagcode).decode('gb2312')
     char_set.add(tagcode_unicode)
 char_list = list(char_set)
