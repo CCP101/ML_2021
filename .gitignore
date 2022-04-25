@@ -1,6 +1,5 @@
-/my_logs/
 /dataset/train.tfrecord
 /dataset/test.tfrecord
 /checkpoints
 /dataset/TFrecord
-/train_DL/my_logs
+/train_DL/logs

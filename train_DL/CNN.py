@@ -31,7 +31,7 @@ model.compile(loss="sparse_categorical_crossentropy",
               metrics=["accuracy"])
 
 run_index = 2
-run_logdir = os.path.join(os.curdir, "../my_logs", "run_bn_{:03d}".format(run_index))
+run_logdir = os.path.join(os.curdir, "../logs", "run_bn_{:03d}".format(run_index))
 tensorboard_cb = keras.callbacks.TensorBoard(run_logdir)
 callbacks = [tensorboard_cb]
 model.fit(X_train, y_train, epochs=20,

@@ -94,7 +94,6 @@ if __name__ == '__main__':
     t2 = 0.4
     T = 1000
     Tmin = 10
-    k = 10
     distance = 100000
     while T >= Tmin:
         gc = Canopy(dataset)

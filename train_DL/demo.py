@@ -1,6 +1,5 @@
 import os
 from cv2 import cv2
-import sys
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -8,7 +7,10 @@ import glob
 
 
 def load_characters():
-    # 读取字符集文件夹
+    """
+    读取字符集文件并转成列表
+    :return: 字符集列表
+    """
     charset = []
     if os.path.exists('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\charactersCut.txt'):
         with open('D:\\WorkSpace\\PycharmProjects\\ML_2021\\dataset\\charactersCut.txt', 'r', encoding="utf-8") as f:
@@ -19,6 +21,10 @@ def load_characters():
 
 
 def get_model():
+    """
+    从模型架构及权重文件夹恢复模型
+    :return: 重构的模型
+    """
     # 模型恢复 模型架构与训练完全一致
     model = keras.models.Sequential([
         keras.layers.Conv2D(96, (7, 7), strides=(3, 3), input_shape=(64, 64, 1), activation="relu"),

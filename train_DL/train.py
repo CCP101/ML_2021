@@ -87,7 +87,7 @@ def get_run_logdir():
 
 if __name__ == '__main__':
     # 日志记录配置
-    root_logdir = os.path.join(os.curdir, "my_logs")
+    root_logdir = os.path.join(os.curdir, "logs")
     run_logdir = get_run_logdir()
     # 字符集读取
     all_characters = load_characters()
